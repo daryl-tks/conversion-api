@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/daryl-tks/conversion-api/issues"
   },
-  "homepage": "https://github.com/daryl-tks/conversion-api#readme"
+  "homepage": "https://github.com/daryl-tks/conversion-api#readme",
+  "dependencies": {
+    "serverless-dotenv-plugin": "^4.0.0",
+    "serverless-mysql": "^1.5.4",
+    "serverless-offline": "^8.7.0",
+    "serverless-webpack": "^5.7.1",
+    "webpack-node-externals": "^3.0.0"
+  }
 }
