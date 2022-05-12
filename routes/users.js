@@ -7,9 +7,8 @@ const { validateUser } = require('../validations');
 router.get('/', function (req, res) {
   const query = 'SELECT * FROM users';
 
-  connection.query(query, (err, rows, fields) => {
-    const data = { data: rows };
-    !err ? res.send(data) : res.status(400).send({ err_msg: err });
+  connection.query(query, (err, result) => {
+    !err ? res.send({ data: result }) : res.status(400).send({ err_msg: err });
   });
 });
 
@@ -20,13 +19,22 @@ router.post('/', function (req, res) {
   connection.query(
     'SELECT username FROM users WHERE username = ?',
     [username],
-    (err, result) =>
-      result.length &&
-      res.status(400).send({ err_msg: 'Username already exist', code: 400 })
-  );
-
-  connection.query('INSERT INTO users SET ?', [{ username }], (err, result) =>
-    console.log('result', result)
+    (err, result) => {
+      if (result.length) {
+        res.status(400).send({ error: 'Username already exist', code: 400 });
+      } else {
+        connection.query(
+          'INSERT INTO users SET ?',
+          [{ username }],
+          (error, result) =>
+            result.insertId
+              ? res
+                  .status(201)
+                  .send({ message: 'Successfully created new user' })
+              : res.status(400).send({ error, code: 400 })
+        );
+      }
+    }
   );
 });
 
