@@ -1,13 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const connection = require('../connection');
-const { validateUser } = require('../validations');
 
 // @DESC - GET users
-router.get('/', function (req, res) {
-  const query = 'SELECT * FROM users';
-
-  connection.query(query, (err, result) => {
+router.get('/', function (_, res) {
+  connection.query('SELECT * FROM users', (err, result) => {
     !err ? res.send({ data: result }) : res.status(400).send({ err_msg: err });
   });
 });
