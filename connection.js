@@ -7,12 +7,8 @@ var connection = mysql.createConnection({
   database: 'khelraja',
 });
 
-connection.connect((error) => {
-  if (!!error) {
-    console.log('ERROR', error);
-  } else {
-    console.log('CONNECTED');
-  }
+connection.connect((err) => {
+  !!err ? console.log('ERROR', err) : console.log('DB SERVER CONNECTED');
 });
 
-connection.end();
+module.exports = connection;
